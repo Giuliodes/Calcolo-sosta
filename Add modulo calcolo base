@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<title>Modulo con Calcolo</title>
+</head>
+<body>
+  <h2>Modulo con Calcolo Semplice</h2>
+  <form id="formCalc">
+    Valore 1: <input type="number" id="val1" /><br><br>
+    Valore 2: <input type="number" id="val2" /><br><br>
+    <button type="button" onclick="faiCalcolo()">Calcola Somma</button><br><br>
+    Risultato: <input type="text" id="risultato" readonly />
+  </form>
+
+  <script>
+    function faiCalcolo() {
+      const v1 = parseFloat(document.getElementById('val1').value) || 0;
+      const v2 = parseFloat(document.getElementById('val2').value) || 0;
+      const somma = v1 + v2;
+      document.getElementById('risultato').value = somma;
+    }
+  </script>
+</body>
+</html>
