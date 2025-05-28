@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<title>Modulo con Calcolo</title>
+  <meta charset="UTF-8">
+  <title>Calcolo Sosta</title>
 </head>
 <body>
-  <h2>Modulo con Calcolo Semplice</h2>
-  <form id="formCalc">
-    Valore 1: <input type="number" id="val1" /><br><br>
-    Valore 2: <input type="number" id="val2" /><br><br>
-    <button type="button" onclick="faiCalcolo()">Calcola Somma</button><br><br>
-    Risultato: <input type="text" id="risultato" readonly />
+  <h2>Calcolo della Sosta</h2>
+  <form>
+    Ora inizio: <input type="time" id="oraInizio"><br><br>
+    Ora fine: <input type="time" id="oraFine"><br><br>
+    Tariffa oraria (€): <input type="number" id="tariffa" value="1" step="0.01"><br><br>
+    
+    <button type="button" onclick="calcolaSosta()">Calcola</button><br><br>
+    
+    Durata: <input type="text" id="durata" readonly> ore<br><br>
+    Costo totale: <input type="text" id="costo" readonly> €
   </form>
 
   <script>
-    function faiCalcolo() {
-      const v1 = parseFloat(document.getElementById('val1').value) || 0;
-      const v2 = parseFloat(document.getElementById('val2').value) || 0;
-      const somma = v1 + v2;
-      document.getElementById('risultato').value = somma;
+    function calcolaSosta() {
+      const inizio = document.getElementById('oraInizio').value;
+      const fine = document.getElementById('oraFine').value;
+      const tariffa = parseFloat(document.getElementById('tariffa').value);
+
+      if (!inizio || !fine || isNaN(tariffa)) {
+        alert("Per favore, inserisci tutti i dati.");
+        return;
+      }
+
+      const [h1, m1] = inizio.split(':').map(Number);
+      const [h2, m2] = fine.split(':').map(Number);
+
+      const t1 = h1 * 60 + m1;
+      const t2 = h2 * 60 + m2;
+
+      if (t2 <= t1) {
+        alert("L'ora di fine deve essere dopo l'ora di inizio.");
+        return;
+      }
+
+      const durataMinuti = t2 - t1;
+      const durataOre = durataMinuti / 60;
+      const costo = durataOre * tariffa;
+
+      document.getElementById('durata').value = durataOre.toFixed(2);
+      document.getElementById('costo').value = costo.toFixed(2);
     }
   </script>
 </body>
